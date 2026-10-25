@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
-import { GuestWish, Invitation, RsvpRequest, TimelineEvent, WishRequest } from '../models/wedding.models';
+import { GuestWish, Invitation, RsvpRequest, TimelineEvent, WeddingStats, WishRequest } from '../models/wedding.models';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -15,16 +15,16 @@ const DEMO_INVITATION: Invitation = {
 };
 
 const DEMO_TIMELINE: TimelineEvent[] = [
-  { id: 1, time: '٧:٠٠ م', title: 'استقبال الضيوف', description: 'نستقبلكم بفرح ومحبة', icon: '✧' },
-  { id: 2, time: '٨:٠٠ م', title: 'عقد القران', description: 'لحظتنا المنتظرة', icon: '♡' },
-  { id: 3, time: '٨:٣٠ م', title: 'الزفة الملكية', description: 'نحتفل ببداية حكايتنا', icon: '✿' },
-  { id: 4, time: '٩:٣٠ م', title: 'العشاء والاحتفال', description: 'ليلة تجمعنا بكم', icon: '❋' }
+  { id: 1, time: '٧:٠٠ م', title: 'استقبال الضيوف', description: 'نستقبلكم بكل حب وترحاب في بهو القاعة', icon: '✦' },
+  { id: 2, time: '٨:٠٠ م', title: 'عقد القران المبارك', description: 'توثيق العهد وكلمات المحبة بحضور الأهل والأحباب', icon: '✧' },
+  { id: 3, time: '٨:٤٥ م', title: 'الزفة ودخول العروسين', description: 'لحظة الفرح الكبرى وبداية الاحتفال مع الأصدقاء', icon: '✺' },
+  { id: 4, time: '٩:٣٠ م', title: 'مأدبة العشاء الفاخرة', description: 'تشريفكم يزين مائدتنا ويسعد قلوبنا', icon: '◈' }
 ];
 
 const DEMO_WISHES: GuestWish[] = [
-  { id: 1, guestName: 'مريم', message: 'ألف مبروك يا أحلى عروسين، ربنا يسعدكم دائمًا 💛', createdAt: new Date().toISOString() },
-  { id: 2, guestName: 'عمر', message: 'بارك الله لكما وبارك عليكما وجمع بينكما في خير', createdAt: new Date().toISOString() },
-  { id: 3, guestName: 'سارة', message: 'ليلتكم أجمل بداية لحكاية عمر.. بحبكم 🤍', createdAt: new Date().toISOString() }
+  { id: 1, guestName: 'مريم الشريف', message: 'ألف مبروك يا أجمل ليلى ويوسف، بارك الله لكما وجمع بينكما في خير وسعادة دائمة 🤍', createdAt: new Date().toISOString() },
+  { id: 2, guestName: 'عمر كمال', message: 'من أطيب وأجمل القلوب، ليلة لا تُنسى وحياة مليئة بالبركة والرضا يا رب 💍', createdAt: new Date().toISOString() },
+  { id: 3, guestName: 'سارة عبد الرحمن', message: 'فرحتنا بيكم ملهاش حدود، أحلى وأرقى عرسان في الدنيا 🌿', createdAt: new Date().toISOString() }
 ];
 
 @Injectable({ providedIn: 'root' })
@@ -41,6 +41,10 @@ export class InvitationService {
 
   getWishes(): Observable<GuestWish[]> {
     return this.http.get<GuestWish[]>(`${API_URL}/wishes`).pipe(catchError(() => of(DEMO_WISHES)));
+  }
+
+  getStats(): Observable<WeddingStats> {
+    return this.http.get<WeddingStats>(`${API_URL}/stats`).pipe(catchError(() => of({ totalRsvps: 28, totalGuests: 64, totalWishes: 18 })));
   }
 
   createRsvp(request: RsvpRequest): Observable<unknown> {
