@@ -101,7 +101,7 @@ import { InvitationShellComponent } from './components/invitation-shell.componen
 
         <section class="wishes-section section-pad reveal-section">
           <div class="section-heading"><span class="eyebrow">كلمات من القلب</span><h2>رسائل <em>المحبّة</em></h2><p class="section-subtitle">كلماتكم الطيبة تبقى معنا بعد انتهاء هذه الليلة</p></div>
-          <div class="wishes-grid"><article class="wish-card" *ngFor="let wish of wishes; let index = index" [style.--wish-index]="index"><span class="wish-quote">“</span><p>{{ wish.message }}</p><div class="wish-author">{{ wish.guestName }}</div><time>{{ wish.createdAt | date:'mediumDate':'':'ar' }}</time></article></div>
+          <div class="wishes-grid"><article class="wish-card" *ngFor="let wish of wishes; let index = index" [style.--wish-index]="index"><span class="wish-quote">“</span><p>{{ wish.message }}</p><div class="wish-author">{{ wish.guestName }}</div><time>{{ wish.createdAt | date:'dd/MM/yyyy' }}</time></article></div>
           <form class="wish-form" (ngSubmit)="submitWish()"><input name="wishName" [(ngModel)]="wishName" required placeholder="اسمك"><input name="wishMessage" [(ngModel)]="wishMessage" required minlength="3" placeholder="اكتب تهنئتك الجميلة"><button type="submit" aria-label="أرسل التهنئة">أرسلها <span>↗</span></button></form>
         </section>
       </main>
