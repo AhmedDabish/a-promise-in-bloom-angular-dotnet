@@ -1,47 +1,101 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'wed-invitation-shell',
   standalone: true,
   imports: [CommonModule],
-  animations: [
-    trigger('reveal', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.96) translateY(20px)' }),
-        animate('900ms cubic-bezier(.16, 1, .3, 1)', style({ opacity: 1, transform: 'scale(1) translateY(0)' }))
-      ])
-    ])
-  ],
   template: `
-    <main class="invitation-shell" [@reveal]="true">
-      <div class="shell-ambient-glow" aria-hidden="true"></div>
-      <div class="envelope-card">
-        <div class="envelope-border-gold"></div>
-        <div class="envelope-corner ec-tl">✤</div><div class="envelope-corner ec-tr">✤</div>
-        <div class="envelope-corner ec-bl">✤</div><div class="envelope-corner ec-br">✤</div>
-        <div class="shell-ornament ornament-top">✦ ✧ ✦</div>
-        <p class="shell-kicker">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</p>
-        <div class="shell-monogram-luxury">
-          <span class="mono-letter">ل</span>
-          <span class="mono-rings"><svg viewBox="0 0 40 40" width="32" height="32" fill="none" aria-hidden="true"><circle cx="16" cy="20" r="10" stroke="currentColor" stroke-width="1.8" opacity=".8"/><circle cx="24" cy="20" r="10" stroke="currentColor" stroke-width="1.8"/></svg></span>
-          <span class="mono-letter">ي</span>
+    <main class="envelope-stage" [class.unsealed]="isOpening">
+      <!-- Ambient background lighting -->
+      <div class="stage-backdrop">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+      </div>
+
+      <!-- Real 3D interactive envelope experience -->
+      <div class="envelope-container" [class.open-anim]="isOpening">
+        <!-- Back of envelope -->
+        <div class="envelope-back"></div>
+
+        <!-- The physical invitation card that slides up -->
+        <div class="invitation-letter-card">
+          <div class="letter-inner-frame">
+            <div class="letter-calligraphy-header">
+              <span class="bismillah-text">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</span>
+              <div class="letter-divider"><span>✧</span></div>
+            </div>
+
+            <div class="letter-monogram">
+              <span class="mono-char">ل</span>
+              <span class="mono-center">
+                <svg viewBox="0 0 40 40" width="28" height="28" fill="none" class="wedding-rings-icon">
+                  <circle cx="16" cy="20" r="10" stroke="currentColor" stroke-width="1.6" opacity="0.85"/>
+                  <circle cx="24" cy="20" r="10" stroke="currentColor" stroke-width="1.6"/>
+                </svg>
+              </span>
+              <span class="mono-char">ي</span>
+            </div>
+
+            <h1 class="letter-names">
+              <span>ليلى</span>
+              <span class="letter-amp">&amp;</span>
+              <span>يوسف</span>
+            </h1>
+
+            <p class="letter-body">
+              بكل آيات المودة وصدق المحبة،<br>
+              نتشرف بدعوتكم لحضور حفل زفافنا ومشاركتنا فرحة العمر
+            </p>
+
+            <div class="letter-date-pill">
+              <span class="date-icon">❖</span>
+              <span>الخميس ٢٤ ديسمبر ٢٠٢٦</span>
+            </div>
+          </div>
         </div>
-        <h1 class="shell-title"><span>ليلى</span><span class="shell-and">و</span><span>يوسف</span></h1>
-        <p class="shell-subtitle">ندعوكم لمشاركتنا فرحة العمر والاحتفال بليلة زفافنا</p>
-        <div class="wax-seal-wrapper">
-          <button type="button" class="luxury-seal-btn" (click)="open.emit()" aria-label="افتح الدعوة">
-            <span class="seal-outer-ripple"></span>
-            <span class="seal-body"><span class="seal-emblem">♡</span><span class="seal-text">افتح الدعوة</span></span>
+
+        <!-- Front pocket flaps of envelope -->
+        <div class="envelope-pocket"></div>
+
+        <!-- Top triangular seal flap -->
+        <div class="envelope-flap" [class.flap-opened]="isOpening">
+          <!-- Realistic Wax Seal Button -->
+          <button
+            type="button"
+            class="wax-seal-press"
+            [class.cracking]="isOpening"
+            (click)="triggerOpen()"
+            [disabled]="isOpening"
+            aria-label="كسر الختم وفتح الدعوة"
+          >
+            <span class="seal-glow-ring"></span>
+            <span class="seal-wax-stamp">
+              <span class="seal-initials">LY</span>
+              <span class="seal-subtext">افتح الدعوة</span>
+            </span>
           </button>
         </div>
-        <p class="shell-hint">اضغط على الختم الملكي لفتح تفاصيل الحفل ✧</p>
-        <div class="shell-ornament ornament-bottom">✦ ✧ ✦</div>
+      </div>
+
+      <div class="envelope-prompt" *ngIf="!isOpening">
+        <span class="prompt-pulse-dot"></span>
+        <span>اضغط على الختم الملكي لفتح الدعوة الرسمية</span>
       </div>
     </main>
   `
 })
 export class InvitationShellComponent {
   @Output() open = new EventEmitter<void>();
+  isOpening = false;
+
+  triggerOpen(): void {
+    if (this.isOpening) return;
+    this.isOpening = true;
+
+    // Smooth choreographed transition: flap opens -> card slides out -> full invitation appears
+    setTimeout(() => {
+      this.open.emit();
+    }, 1100);
+  }
 }
