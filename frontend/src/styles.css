@@ -390,3 +390,84 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* ── Editorial refinement: restrained typography, spacing and contrast ── */
+:root {
+  --cream: #f5f2eb;
+  --paper: #fbfaf6;
+  --ink: #292b26;
+  --muted: #77766f;
+  --gold: #9a8052;
+  --gold-light: #d4c29c;
+  --sage: #596455;
+  --line: #e5e0d5;
+  --rose: #a7766e;
+  --night: #253128;
+  --night-soft: #303c33;
+}
+body { font-family: 'Tajawal', sans-serif; background: var(--paper); color: var(--ink); }
+.petal-field, .hero-corner, .card-spark, .section-ornament, .heading-flourish,
+.rsvp-decoration, .author-flower { display: none !important; }
+
+/* A quiet printed-invitation opening, not a template-style effects page */
+.invitation-shell { background: #eeece4; padding: 32px 20px; }
+.shell-ambient-glow { display: none; }
+.envelope-card {
+  width: min(100%, 560px); min-height: min(82svh, 720px); padding: clamp(44px, 8vw, 78px) 34px;
+  background: #fbfaf6; color: #30332d; border: 1px solid #d9d2c2; box-shadow: 0 18px 55px rgba(43, 43, 36, .08);
+}
+.envelope-border-gold { inset: 12px; border-color: #e5dfd1; }
+.envelope-corner { color: #a48a5e; opacity: .65; font-size: 15px; }
+.shell-ornament { color: #a48a5e; letter-spacing: 8px; font-size: 11px; animation: none; }
+.shell-kicker { color: #81704e; font-size: 12px; letter-spacing: .06em; }
+.shell-monogram-luxury { color: #9a8052; }
+.mono-letter { font-size: 30px; }
+.shell-title { color: #292b26; font-size: clamp(48px, 9vw, 76px); font-weight: 400; }
+.shell-and { color: #9a8052; }
+.shell-subtitle { color: #6f7068; font-size: 16px; }
+.luxury-seal-btn { width: 94px; height: 94px; }
+.seal-outer-ripple { animation: none; inset: -5px; border-color: #d6c9aa; }
+.seal-body { background: #f3f0e8; border: 1px solid #c9b991; color: #5f5239; box-shadow: none; }
+.seal-emblem { display: none; }
+.seal-text { font-size: 13px; color: #594d37; }
+.shell-hint { color: #858178; }
+
+/* Restrained wedding editorial palette */
+.hero-section {
+  min-height: 92svh;
+  background: linear-gradient(135deg, #263229 0%, #344239 55%, #28342b 100%);
+}
+.hero-overlay { background: linear-gradient(180deg, rgba(17,24,19,.12), rgba(17,24,19,.42)); }
+.hero-content { max-width: 860px; }
+.hero-eyebrow { font-size: 13px; letter-spacing: .05em; color: #d5c49e; }
+.hero-name { font-family: 'Aref Ruqaa', serif !important; font-weight: 400; }
+.hero-caption { font-size: 17px; letter-spacing: .02em; }
+.hero-date { color: #e0d2b4; }
+.scroll-cue { opacity: .72; }
+.quote-section { background: #f1eee6; }
+.quran-verse { color: #3d473e; }
+.quote-translation { color: #857552; }
+.countdown-section { background: #29362d; }
+.countdown-section .section-heading h2 { color: #f8f5ee; }
+.count-card { border: 1px solid rgba(218,203,169,.27); background: transparent; box-shadow: none; border-radius: 2px; }
+.count-number { color: #e6d6b2; }
+.countdown-grid { gap: clamp(9px, 2vw, 20px); }
+.details-section, .timeline-section, .wishes-section { background: #fbfaf6; }
+.detail-card, .wish-card { border-radius: 2px; box-shadow: none; border-color: #e4dfd4; }
+.detail-card:hover, .wish-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37,38,31,.06); }
+.detail-icon, .timeline-icon { color: #8b7750; }
+.timeline-icon { background: #f7f4ed; border-color: #dfd9cb; }
+.rsvp-section { background: #f1eee6; }
+.rsvp-card { border: 1px solid #ded7c8; border-radius: 3px; box-shadow: none; background: #fbfaf6; }
+.primary-button, .wish-form button { border-radius: 2px; background: #344239; box-shadow: none; }
+.primary-button:hover, .wish-form button:hover { transform: translateY(-1px); }
+.rsvp-form input, .rsvp-form textarea, .rsvp-form select, .wish-form input { border-radius: 2px; background: #fffefa; }
+.whatsapp-link { color: #435b49; }
+.footer-section { background: #263229; }
+.music-toggle, .back-to-top { border-radius: 2px; }
+.music-toggle { background: #344239; border-color: rgba(229,215,184,.35); }
+@media (max-width: 600px) {
+  .envelope-card { min-height: min(84svh, 690px); padding: 42px 25px; }
+  .hero-section { min-height: 88svh; }
+}
