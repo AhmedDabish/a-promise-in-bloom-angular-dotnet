@@ -24,7 +24,6 @@ using (var scope = app.Services.CreateScope())
     await SeedData.InitializeAsync(db);
 }
 
-// Swagger enabled always for easy testing & local runs
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -36,9 +35,18 @@ app.UseCors("AngularClient");
 app.MapControllers();
 
 // Health check endpoint
-app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTimeOffset.UtcNow }));
 
-// Redirect root URL to swagger so / does not return 404
+// Summary stats endpoint for admin / evaluation metrics
+app.MapGet("/api/stats", async (WeddingDbContext db, CancellationToken ct) =>
+{
+    var totalRsvps = await db.Rsvps.CountAsync(ct);
+    var totalGuests = await db.Rsvps.SumAsync(r => (int?)r.GuestCount, ct) ?? 0;
+    var totalWishes = await db.Wishes.CountAsync(ct);
+    return Results.Ok(new { totalRsvps, totalGuests, totalWishes });
+});
+
+// Redirect root to swagger
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
