@@ -24,13 +24,21 @@ using (var scope = app.Services.CreateScope())
     await SeedData.InitializeAsync(db);
 }
 
-if (app.Environment.IsDevelopment())
+// Swagger enabled always for easy testing & local runs
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wedding Invitation API v1");
+    c.RoutePrefix = "swagger";
+});
+
 app.UseCors("AngularClient");
-app.UseHttpsRedirection();
 app.MapControllers();
+
+// Health check endpoint
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+
+// Redirect root URL to swagger so / does not return 404
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
 app.Run();
