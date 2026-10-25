@@ -45,3 +45,9 @@ export interface Countdown {
   minutes: number;
   seconds: number;
 }
+
+export interface WeddingStats {
+  totalRsvps: number;
+  totalGuests: number;
+  totalWishes: number;
+}
