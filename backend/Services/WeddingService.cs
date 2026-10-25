@@ -38,7 +38,7 @@ public sealed class WeddingService(WeddingDbContext db) : IWeddingService
     }
 
     public async Task<IReadOnlyList<GuestWish>> GetWishesAsync(CancellationToken cancellationToken) =>
-        await db.Wishes.AsNoTracking().OrderByDescending(wish => wish.CreatedAt).Take(30).ToListAsync(cancellationToken);
+        await db.Wishes.AsNoTracking().OrderByDescending(wish => wish.Id).Take(30).ToListAsync(cancellationToken);
 
     public async Task<GuestWish> CreateWishAsync(WishRequestDto request, CancellationToken cancellationToken)
     {
